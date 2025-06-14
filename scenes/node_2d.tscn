@@ -1,17 +1,22 @@
-[gd_scene load_steps=6 format=3 uid="uid://cckggyp0j4i1a"]
+[gd_scene load_steps=9 format=3 uid="uid://cckggyp0j4i1a"]
 
 [ext_resource type="Script" uid="uid://cwxwmwhcg750p" path="res://scenes/node_2d.gd" id="1_4vge2"]
 [ext_resource type="Texture2D" uid="uid://dfovg0enw0mtf" path="res://AssetBundle/Sprites/ForestBackground.png" id="1_6e84v"]
 [ext_resource type="PackedScene" uid="uid://bscopnahooedt" path="res://scenes/plyaer.tscn" id="2_4dvvg"]
 [ext_resource type="PackedScene" uid="uid://chwvbgkj6240y" path="res://scenes/slime.tscn" id="3_rnjyy"]
+[ext_resource type="FontFile" uid="uid://dr15arnk1ehfo" path="res://AssetBundle/Uranus_Pixel_11Px.ttf" id="5_04qyp"]
+[ext_resource type="AudioStream" uid="uid://drc2qfumn1w5u" path="res://AssetBundle/Audio/GameOver.mp3" id="6_j7wrs"]
+[ext_resource type="AudioStream" uid="uid://2bwxtlplikir" path="res://AssetBundle/Audio/BGM.ogg" id="7_fws66"]
 
 [sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_rnjyy"]
 
-[node name="Node2D" type="Node2D" node_paths=PackedStringArray("spwan_timer")]
+[node name="Node2D" type="Node2D" node_paths=PackedStringArray("spwan_timer", "score_label", "game_over_label")]
 y_sort_enabled = true
 script = ExtResource("1_4vge2")
 slime_scene = ExtResource("3_rnjyy")
 spwan_timer = NodePath("Timer")
+score_label = NodePath("CanvasLayer/Label")
+game_over_label = NodePath("CanvasLayer/Label_game_over")
 
 [node name="background_1" type="Sprite2D" parent="."]
 position = Vector2(-120, 0)
@@ -63,5 +68,65 @@ shape = SubResource("WorldBoundaryShape2D_rnjyy")
 [node name="Timer" type="Timer" parent="."]
 wait_time = 5.0
 autostart = true
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+offset_left = 10.0
+offset_top = 16.0
+offset_right = 56.0
+offset_bottom = 39.0
+theme_override_fonts/font = ExtResource("5_04qyp")
+theme_override_font_sizes/font_size = 21
+text = "Score:  "
+metadata/_edit_use_anchors_ = true
+
+[node name="Label_game_over" type="Label" parent="CanvasLayer"]
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -126.5
+offset_top = -16.5
+offset_right = 126.5
+offset_bottom = 16.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_outline_color = Color(0.156863, 0.494118, 0.239216, 1)
+theme_override_constants/outline_size = 60
+theme_override_fonts/font = ExtResource("5_04qyp")
+theme_override_font_sizes/font_size = 120
+text = "GAME OVER！"
+
+[node name="Label_signature" type="Label" parent="CanvasLayer/Label_game_over"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -474.0
+offset_top = 85.0
+offset_right = 477.0
+offset_bottom = 205.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_outline_color = Color(0.156863, 0.494118, 0.239216, 1)
+theme_override_constants/outline_size = 60
+theme_override_fonts/font = ExtResource("5_04qyp")
+theme_override_font_sizes/font_size = 60
+text = "Game By SKRaua"
+horizontal_alignment = 1
+
+[node name="game_over_voice" type="AudioStreamPlayer2D" parent="CanvasLayer"]
+stream = ExtResource("6_j7wrs")
+volume_db = 10.276
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("7_fws66")
+volume_db = -10.213
+autoplay = true
 
 [connection signal="timeout" from="Timer" to="." method="_create_enemy"]

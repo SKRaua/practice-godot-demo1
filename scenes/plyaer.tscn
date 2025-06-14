@@ -1,8 +1,9 @@
-[gd_scene load_steps=22 format=3 uid="uid://bscopnahooedt"]
+[gd_scene load_steps=23 format=3 uid="uid://bscopnahooedt"]
 
 [ext_resource type="Script" uid="uid://bekakbq2aq3ij" path="res://Scripts/plyaer.gd" id="1_jobb7"]
 [ext_resource type="Texture2D" uid="uid://chbrs3jwgms41" path="res://AssetBundle/Sprites/Foxy.png" id="1_y1hrs"]
 [ext_resource type="PackedScene" uid="uid://kgmeq4iy77qd" path="res://scenes/bullet.tscn" id="2_l1bvv"]
+[ext_resource type="AudioStream" uid="uid://bok41hvk0rqjq" path="res://AssetBundle/Audio/Running.mp3" id="4_jo6xv"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_fprwr"]
 atlas = ExtResource("1_y1hrs")
@@ -146,16 +147,18 @@ bullet_scene = ExtResource("2_l1bvv")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(1, 1.17858)
 sprite_frames = SubResource("SpriteFrames_cqasa")
-animation = &"game_over"
+animation = &"idle"
 autoplay = "idle"
-frame_progress = 0.798918
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 5)
 shape = SubResource("CapsuleShape2D_jobb7")
 
 [node name="Timer" type="Timer" parent="."]
-wait_time = 0.5
+wait_time = 0.3
 autostart = true
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("4_jo6xv")
 
 [connection signal="timeout" from="Timer" to="." method="_on_fire"]

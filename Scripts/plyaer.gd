@@ -3,15 +3,19 @@ extends CharacterBody2D
 @export var move_speed: float = 80
 @export var animator: AnimatedSprite2D
 @export var bullet_scene: PackedScene 
-
-
-var is_game_over: bool = false
+@export var is_game_over: bool = false
 
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	print("hello")
 	#velocity = Vector2(50,0)
+
+func _process(delta: float) -> void:
+		if velocity == Vector2.ZERO or is_game_over:
+			$AudioStreamPlayer.stop()
+		elif !$AudioStreamPlayer.playing:
+			$AudioStreamPlayer.play()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
@@ -30,6 +34,7 @@ func _physics_process(delta: float) -> void:
 func game_over():
 	is_game_over = true
 	animator.play("game_over")
+	get_tree().current_scene.show_game_over()
 	await get_tree().create_timer(2).timeout
 	get_tree().reload_current_scene()
 	
