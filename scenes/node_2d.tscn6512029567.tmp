@@ -1,0 +1,37 @@
+[gd_scene load_steps=5 format=3 uid="uid://cckggyp0j4i1a"]
+
+[ext_resource type="Texture2D" uid="uid://dfovg0enw0mtf" path="res://AssetBundle/Sprites/ForestBackground.png" id="1_6e84v"]
+[ext_resource type="PackedScene" uid="uid://bscopnahooedt" path="res://scenes/plyaer.tscn" id="2_4dvvg"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4dvvg"]
+height = 26.0
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_rnjyy"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="background_1" type="Sprite2D" parent="."]
+position = Vector2(-120, 0)
+texture = ExtResource("1_6e84v")
+metadata/_edit_lock_ = true
+
+[node name="background_2" type="Sprite2D" parent="."]
+position = Vector2(120, 0)
+texture = ExtResource("1_6e84v")
+metadata/_edit_lock_ = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2.395, 2.395)
+
+[node name="plyaer" parent="." instance=ExtResource("2_4dvvg")]
+position = Vector2(-206, 83)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="plyaer"]
+position = Vector2(0, 5)
+shape = SubResource("CapsuleShape2D_4dvvg")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(0, 135)
+shape = SubResource("WorldBoundaryShape2D_rnjyy")

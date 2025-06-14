@@ -1,0 +1,67 @@
+[gd_scene load_steps=6 format=3 uid="uid://cckggyp0j4i1a"]
+
+[ext_resource type="Script" uid="uid://cwxwmwhcg750p" path="res://scenes/node_2d.gd" id="1_4vge2"]
+[ext_resource type="Texture2D" uid="uid://dfovg0enw0mtf" path="res://AssetBundle/Sprites/ForestBackground.png" id="1_6e84v"]
+[ext_resource type="PackedScene" uid="uid://bscopnahooedt" path="res://scenes/plyaer.tscn" id="2_4dvvg"]
+[ext_resource type="PackedScene" uid="uid://chwvbgkj6240y" path="res://scenes/slime.tscn" id="3_rnjyy"]
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_rnjyy"]
+
+[node name="Node2D" type="Node2D" node_paths=PackedStringArray("spwan_timer")]
+y_sort_enabled = true
+script = ExtResource("1_4vge2")
+slime_scene = ExtResource("3_rnjyy")
+spwan_timer = NodePath("Timer")
+
+[node name="background_1" type="Sprite2D" parent="."]
+position = Vector2(-120, 0)
+texture = ExtResource("1_6e84v")
+metadata/_edit_lock_ = true
+
+[node name="background_2" type="Sprite2D" parent="."]
+position = Vector2(120, 0)
+texture = ExtResource("1_6e84v")
+metadata/_edit_lock_ = true
+
+[node name="Camera2D" type="Camera2D" parent="."]
+zoom = Vector2(2.395, 2.395)
+metadata/_edit_lock_ = true
+
+[node name="plyaer" parent="." instance=ExtResource("2_4dvvg")]
+position = Vector2(-209, 82)
+
+[node name="Boundary" type="Node2D" parent="."]
+metadata/_edit_lock_ = true
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Boundary"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundary/StaticBody2D"]
+position = Vector2(0, 148)
+shape = SubResource("WorldBoundaryShape2D_rnjyy")
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="Boundary"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundary/StaticBody2D2"]
+position = Vector2(0, 18)
+rotation = 3.14159
+shape = SubResource("WorldBoundaryShape2D_rnjyy")
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="Boundary"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundary/StaticBody2D3"]
+position = Vector2(-240, 0)
+rotation = 1.57079
+shape = SubResource("WorldBoundaryShape2D_rnjyy")
+
+[node name="StaticBody2D4" type="StaticBody2D" parent="Boundary"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Boundary/StaticBody2D4"]
+position = Vector2(241, 0)
+rotation = -1.57079
+shape = SubResource("WorldBoundaryShape2D_rnjyy")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 5.0
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_create_enemy"]
